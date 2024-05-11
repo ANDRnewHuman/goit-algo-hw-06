@@ -28,9 +28,15 @@ class Record:
         self.phones = [p for p in self.phones if p.value != phone]
 
     def edit_phone(self, old_phone, new_phone):
+        if not isinstance(new_phone, str) or len(new_phone) != 10 or not new_phone.isdigit():
+            raise ValueError("New phone number must be a string of 10 digits.")
+        
         for p in self.phones:
             if p.value == old_phone:
                 p.value = new_phone
+                return
+
+        raise ValueError("Old phone number not found in record.")
 
     def find_phone(self, phone):
         for p in self.phones:
